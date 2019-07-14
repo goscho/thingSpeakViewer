@@ -1,0 +1,8 @@
+<h2>Select channel to display</h2>
+<form (ngSubmit)="onSubmit()">
+  <label>
+    Provide a Channel ID
+    <input type="number" [formControl]="channelId" />
+  </label>
+  <button type="submit">view channel</button>
+</form>

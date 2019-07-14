@@ -1,0 +1,25 @@
+<h2>
+  Selected Channel is "{{ (channel$ | async)?.name }}" (ID {{ channelId }})
+</h2>
+<label>
+  select field to display
+  <select (change)="onFieldChange()" [formControl]="selectedField">
+    <option
+      *ngFor="let field of (channel$ | async)?.fields"
+      value="{{ field.index }}"
+      >{{ field.label }} ({{ field.name }})</option
+    >
+  </select>
+</label>
+<table>
+  <thead>
+    <th>value</th>
+    <th>timestamp</th>
+    <th>ID</th>
+  </thead>
+  <tr *ngFor="let entry of entries$ | async">
+    <td>{{ entry.value }}</td>
+    <td>{{ entry.timeStamp }}</td>
+    <td>{{ entry.id }}</td>
+  </tr>
+</table>

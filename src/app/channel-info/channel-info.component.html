@@ -1,0 +1,7 @@
+<div *ngIf="channel">
+  <h1>{{ channel.name }}</h1>
+  <p>{{ channel.description }}</p>
+</div>
+<div *ngIf="!channel">
+  <span>No channel selected</span>
+</div>
