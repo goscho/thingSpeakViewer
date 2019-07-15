@@ -2,12 +2,11 @@ import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { ThingSpeakChannel } from "./types/thing-speak-channel";
 import { Observable, from } from "rxjs";
-import { map, tap, pluck, flatMap, toArray } from "rxjs/operators";
+import { map, tap, switchMap, toArray } from "rxjs/operators";
 import { ThingSpeakDataResponse } from "./types/thing-speak-data-response";
 import { Entry } from "./types/entry";
 import { Channel } from "./types/channel";
 import { Field } from "./types/field";
-import { ThingSpeakEntry } from "./types/thing-speak-entry";
 
 const baseUrl = "https://api.thingspeak.com/channels/";
 
@@ -30,9 +29,18 @@ export class ThingSpeakService {
     const fieldUrl = this.getFieldUrl(channelId, fieldIndex);
     const options = {};
     return this.http.get<ThingSpeakDataResponse>(fieldUrl, options).pipe(
-      tap(res => console.log(`getFieldValues ${channelId} - ${fieldIndex}`, res)),
+      tap(res =>
+        console.log(`getFieldValues ${channelId} - ${fieldIndex}`, res)
+      ),
       switchMap(res => from(res.feeds)),
-      map(entry => new Entry(entry.entry_id, entry[`field${fieldIndex}`], entry.created_at)),
+      map(
+        entry =>
+          new Entry(
+            entry.entry_id,
+            entry[`field${fieldIndex}`],
+            entry.created_at
+          )
+      ),
       toArray()
     );
   }
