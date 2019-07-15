@@ -30,22 +30,10 @@ export class ThingSpeakService {
     const fieldUrl = this.getFieldUrl(channelId, fieldIndex);
     const options = {};
     return this.http.get<ThingSpeakDataResponse>(fieldUrl, options).pipe(
-      tap(res =>
-        console.log(`getFieldValues ${channelId} - ${fieldIndex}`, res)
-      ),
-      map(res => {
-        const entries: Entry[] = [];
-        res.feeds.forEach(entry =>
-          entries.push(
-            new Entry(
-              entry.entry_id,
-              entry["field" + fieldIndex],
-              entry.created_at
-            )
-          )
-        );
-        return entries;
-      })
+      tap(res => console.log(`getFieldValues ${channelId} - ${fieldIndex}`, res)),
+      switchMap(res => from(res.feeds)),
+      map(entry => new Entry(entry.entry_id, entry[`field${fieldIndex}`], entry.created_at)),
+      toArray()
     );
   }
 
