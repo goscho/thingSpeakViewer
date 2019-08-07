@@ -1,11 +1,12 @@
 import { Component, OnInit, OnDestroy } from "@angular/core";
 import { Router, ActivatedRoute } from "@angular/router";
 import { ThingSpeakService } from "../thing-speak.service";
-import { share } from "rxjs/operators";
+import { share, tap } from "rxjs/operators";
 import { Observable, Subject } from "rxjs";
 import { Channel } from "../types/channel";
 import { FormControl } from "@angular/forms";
 import { Entry } from "../types/entry";
+import { DataOptions } from "../types/data-options";
 
 @Component({
   selector: "app-view",
@@ -14,6 +15,7 @@ import { Entry } from "../types/entry";
 })
 export class ViewComponent implements OnInit {
   channelId: number;
+  options: DataOptions;
   channel$: Observable<Channel>;
   entries$: Observable<Entry[]>;
 
@@ -29,6 +31,7 @@ export class ViewComponent implements OnInit {
     this.channelId = this.getChannelId();
     // share() prevents multiple subscibers from async pipe in template
     this.channel$ = this.thingSpeak.getChanelInfo(this.channelId).pipe(share());
+    console.log("--params", this.route.snapshot.params);
   }
 
   private getChannelId(): number {
@@ -38,12 +41,21 @@ export class ViewComponent implements OnInit {
   onFieldChange() {
     this.entries$ = this.thingSpeak.getFieldValues(
       this.channelId,
-      this.selectedField.value
+      this.selectedField.value,
+      new DataOptions()
     );
     this.addFieldToUrl(this.selectedField.value);
   }
 
   addFieldToUrl(fieldIndex: number) {
     this.router.navigate(["view", this.channelId, { field: fieldIndex }]);
+  }
+
+  updateOptions(event: DataOptions) {
+    this.entries$ = this.thingSpeak.getFieldValues(
+      this.channelId,
+      this.selectedField.value,
+      event
+    );
   }
 }

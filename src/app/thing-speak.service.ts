@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpParams } from "@angular/common/http";
 import { ThingSpeakChannel } from "./types/thing-speak-channel";
 import { Observable, from } from "rxjs";
 import { map, tap, switchMap, toArray } from "rxjs/operators";
@@ -7,6 +7,7 @@ import { ThingSpeakDataResponse } from "./types/thing-speak-data-response";
 import { Entry } from "./types/entry";
 import { Channel } from "./types/channel";
 import { Field } from "./types/field";
+import { DataOptions } from "./types/data-options";
 
 const baseUrl = "https://api.thingspeak.com/channels/";
 
@@ -25,9 +26,14 @@ export class ThingSpeakService {
     );
   }
 
-  getFieldValues(channelId: number, fieldIndex: number): Observable<Entry[]> {
+  getFieldValues(
+    channelId: number,
+    fieldIndex: number,
+    dataOptions: DataOptions
+  ): Observable<Entry[]> {
     const fieldUrl = this.getFieldUrl(channelId, fieldIndex);
-    const options = {};
+    const params = this.convertToHttpParams(dataOptions);
+    const options = { params: params };
     return this.http.get<ThingSpeakDataResponse>(fieldUrl, options).pipe(
       tap(res =>
         console.log(`getFieldValues ${channelId} - ${fieldIndex}`, res)
@@ -77,5 +83,13 @@ export class ThingSpeakService {
 
   private extractFieldIndex(fieldName: string): number {
     return parseInt(fieldName.replace("field", ""));
+  }
+
+  private convertToHttpParams(dataOptions: DataOptions) {
+    let params = new HttpParams();
+    Object.keys(dataOptions)
+      .filter(key => dataOptions[key])
+      .forEach(key => (params = params.append(key, dataOptions[key])));
+    return params;
   }
 }

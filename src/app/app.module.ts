@@ -9,13 +9,15 @@ import { AppComponent } from "./app.component";
 import { ChannelInfoComponent } from "./channel-info/channel-info.component";
 import { SetupComponent } from "./setup/setup.component";
 import { ViewComponent } from "./view/view.component";
+import { ParameterFormComponent } from './parameter-form/parameter-form.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ChannelInfoComponent,
     SetupComponent,
-    ViewComponent
+    ViewComponent,
+    ParameterFormComponent
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,43 @@
+<form [formGroup]="parameterForm">
+  <label>results<input type="number" formControlName="results"/></label>
+  <label>days<input type="number" formControlName="days"/></label>
+  <label>minutes<input type="number" formControlName="minutes"/></label>
+  <label>start<input type="datetime" formControlName="start"/></label>
+  <label>end<input type="datetime" formControlName="end"/></label>
+  <label>timezone<input type="text" formControlName="timezone"/></label>
+  <label>round<input type="number" formControlName="round"/></label>
+  <label
+    >timescale<select formControlName="timescale"
+      ><option value=""></option>
+      <option *ngFor="let step of minutesSteps" value="{{ step }}">{{
+        step
+      }}</option></select
+    ></label
+  >
+  <label
+    >sum<select formControlName="sum"
+      ><option value=""></option>
+      <option *ngFor="let step of minutesSteps" value="{{ step }}">{{
+        step
+      }}</option></select
+    ></label
+  >
+  <label
+    >average<select formControlName="average"
+      ><option value=""></option>
+      <option *ngFor="let step of minutesSteps" value="{{ step }}">{{
+        step
+      }}</option></select
+    ></label
+  >
+  <label
+    >median<select formControlName="median"
+      ><option value=""></option>
+      <option *ngFor="let step of minutesSteps" value="{{ step }}">{{
+        step
+      }}</option></select
+    ></label
+  >
+  <button (click)="submit()">Apply</button>
+  <button (click)="reset()">Reset</button>
+</form>
