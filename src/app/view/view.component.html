@@ -14,7 +14,8 @@
 <app-parameter-form
   (optionsApplied)="updateOptions($event)"
 ></app-parameter-form>
-<table>
+<app-chart [entries]="entries$"></app-chart>
+<!-- <table>
   <thead>
     <th>value</th>
     <th>timestamp</th>
@@ -25,4 +26,4 @@
     <td>{{ entry.timeStamp }}</td>
     <td>{{ entry.id }}</td>
   </tr>
-</table>
+</table> -->

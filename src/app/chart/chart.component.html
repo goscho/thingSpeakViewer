@@ -1,0 +1,18 @@
+<h2>Chart</h2>
+<div id="chart-container">
+  <ngx-charts-line-chart
+    *ngIf="entries | async as results"
+    [results]="results"
+    xAxis="true"
+    yAxis="true"
+    roundDomains="false"
+    [showXAxisLabel]="showXAxisLabel"
+    [xAxisLabel]="xAxisLabel"
+    [showYAxisLabel]="showYAxisLabel"
+    [yAxisLabel]="yAxisLabel"
+    [trimXAxisTicks]="trimXAxisTicks"
+    [maxXAxisTickLength]="maxXAxisTickLength"
+    (select)="onSelect($event)"
+  >
+  </ngx-charts-line-chart>
+</div>

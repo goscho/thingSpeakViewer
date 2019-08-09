@@ -1,8 +1,8 @@
 import { Component, OnInit, OnDestroy } from "@angular/core";
 import { Router, ActivatedRoute } from "@angular/router";
 import { ThingSpeakService } from "../thing-speak.service";
-import { share, tap } from "rxjs/operators";
-import { Observable, Subject } from "rxjs";
+import { share, tap, map, switchMap, toArray } from "rxjs/operators";
+import { Observable, from } from "rxjs";
 import { Channel } from "../types/channel";
 import { FormControl } from "@angular/forms";
 import { Entry } from "../types/entry";
@@ -17,7 +17,7 @@ export class ViewComponent implements OnInit {
   channelId: number;
   options: DataOptions;
   channel$: Observable<Channel>;
-  entries$: Observable<Entry[]>;
+  entries$: Observable<any[]>;
 
   selectedField = new FormControl();
 
@@ -39,11 +39,13 @@ export class ViewComponent implements OnInit {
   }
 
   onFieldChange() {
-    this.entries$ = this.thingSpeak.getFieldValues(
-      this.channelId,
-      this.selectedField.value,
-      new DataOptions()
-    );
+    // this.entries$ = this.thingSpeak
+    //   .getFieldValues(
+    //     this.channelId,
+    //     this.selectedField.value,
+    //     new DataOptions()
+    //   )
+    //   .pipe(share());
     this.addFieldToUrl(this.selectedField.value);
   }
 
@@ -52,10 +54,20 @@ export class ViewComponent implements OnInit {
   }
 
   updateOptions(event: DataOptions) {
-    this.entries$ = this.thingSpeak.getFieldValues(
-      this.channelId,
-      this.selectedField.value,
-      event
-    );
+    this.entries$ = this.thingSpeak
+      .getFieldValues(this.channelId, this.selectedField.value, event)
+      .pipe(
+        switchMap(entries => from(entries)),
+        map(entry => {
+          return {
+            name: entry.timeStamp,
+            value: entry.value
+          };
+        }),
+        toArray(),
+        map(data => {
+          return [{ name: "Label", series: data }];
+        })
+      );
   }
 }
