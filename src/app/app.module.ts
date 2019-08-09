@@ -13,6 +13,7 @@ import { SetupComponent } from "./setup/setup.component";
 import { ViewComponent } from "./view/view.component";
 import { ParameterFormComponent } from "./parameter-form/parameter-form.component";
 import { ChartComponent } from "./chart/chart.component";
+import { MaterialModule } from "./material/material.module";
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { ChartComponent } from "./chart/chart.component";
     FormsModule,
     ReactiveFormsModule,
     NgxChartsModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    MaterialModule
   ],
   providers: [],
   bootstrap: [AppComponent]

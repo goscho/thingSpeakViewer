@@ -1,8 +1,12 @@
 <h2>Select channel to display</h2>
 <form (ngSubmit)="onSubmit()">
-  <label>
-    Provide a Channel ID
-    <input type="number" [formControl]="channelId" />
-  </label>
-  <button type="submit">view channel</button>
+  <mat-form-field class="example-full-width">
+    <input
+      matInput
+      type="number"
+      [formControl]="channelId"
+      placeholder="Channel ID"
+    />
+  </mat-form-field>
+  <button mat-raised-button type="submit">view channel</button>
 </form>

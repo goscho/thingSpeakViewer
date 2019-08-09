@@ -1,29 +1,19 @@
 <h2>
   Selected Channel is "{{ (channel$ | async)?.name }}" (ID {{ channelId }})
 </h2>
-<label>
-  select field to display
-  <select (change)="onFieldChange()" [formControl]="selectedField">
-    <option
+
+<mat-form-field>
+  <mat-label>Field to display</mat-label>
+  <mat-select (change)="onFieldChange()" [formControl]="selectedField">
+    <mat-option
       *ngFor="let field of (channel$ | async)?.fields"
       value="{{ field.index }}"
-      >{{ field.label }} ({{ field.name }})</option
+      >{{ field.label }} ({{ field.name }})</mat-option
     >
-  </select>
-</label>
+  </mat-select>
+</mat-form-field>
+
 <app-parameter-form
   (optionsApplied)="updateOptions($event)"
 ></app-parameter-form>
 <app-chart [entries]="entries$"></app-chart>
-<!-- <table>
-  <thead>
-    <th>value</th>
-    <th>timestamp</th>
-    <th>ID</th>
-  </thead>
-  <tr *ngFor="let entry of entries$ | async">
-    <td>{{ entry.value }}</td>
-    <td>{{ entry.timeStamp }}</td>
-    <td>{{ entry.id }}</td>
-  </tr>
-</table> -->
