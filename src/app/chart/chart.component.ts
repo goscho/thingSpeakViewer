@@ -7,6 +7,7 @@ import {
   OnInit
 } from "@angular/core";
 import { Entry } from "../types/entry";
+import { Observable } from "rxjs";
 
 @Component({
   selector: "app-chart",
@@ -15,7 +16,7 @@ import { Entry } from "../types/entry";
 })
 export class ChartComponent implements OnInit {
   @Input()
-  entries: any[];
+  entries$: Observable<any[]>;
 
   // options
   showXAxis = true;
