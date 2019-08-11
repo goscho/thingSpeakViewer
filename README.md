@@ -1,5 +1,10 @@
 # ThingSpeakViewer
 
+[![Netlify Status](https://api.netlify.com/api/v1/badges/ac3a1e6b-7e66-488f-951a-06e68258ac80/deploy-status)](https://app.netlify.com/sites/thingspeakviewer/deploys)
+
+App is deployed to https://thingspeakviewer.netlify.com/
+
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.1.0.
 
 ## Development server
