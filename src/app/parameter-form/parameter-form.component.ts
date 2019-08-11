@@ -14,7 +14,7 @@ export class ParameterFormComponent implements OnInit {
 
   parameterForm = this.formBuilder.group({
     results: [""],
-    days: [""],
+    days: ["1"],
     minutes: [""],
     start: [""],
     end: [""],

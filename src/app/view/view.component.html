@@ -2,18 +2,16 @@
   Selected Channel is "{{ (channel$ | async)?.name }}" (ID {{ channelId }})
 </h2>
 
-<mat-form-field>
-  <mat-label>Field to display</mat-label>
-  <mat-select (change)="onFieldChange()" [formControl]="selectedField">
-    <mat-option
-      *ngFor="let field of (channel$ | async)?.fields"
-      value="{{ field.index }}"
-      >{{ field.label }} ({{ field.name }})</mat-option
-    >
-  </mat-select>
-</mat-form-field>
+<mat-radio-group (change)="onFieldChange()" [formControl]="selectedField">
+  <mat-radio-button
+    *ngFor="let field of (channel$ | async)?.fields"
+    value="{{ field.index }}"
+    >{{ field.name }} {{ field.label }}</mat-radio-button
+  >
+</mat-radio-group>
 
 <app-parameter-form
   (optionsApplied)="updateOptions($event)"
 ></app-parameter-form>
+
 <app-chart [entries$]="entries$"></app-chart>

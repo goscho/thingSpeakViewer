@@ -5,7 +5,9 @@ import {
   MatFormFieldModule,
   MatDatepickerModule,
   MatNativeDateModule,
-  MatSelectModule
+  MatSelectModule,
+  MatRadioModule,
+  MatExpansionModule
 } from "@angular/material";
 
 const includedModules = [
@@ -14,7 +16,9 @@ const includedModules = [
   MatFormFieldModule,
   MatDatepickerModule,
   MatNativeDateModule,
-  MatSelectModule
+  MatSelectModule,
+  MatRadioModule,
+  MatExpansionModule
 ];
 
 @NgModule({
